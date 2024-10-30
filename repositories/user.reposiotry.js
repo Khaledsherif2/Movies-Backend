@@ -1,6 +1,9 @@
 const userModel = require("../Models/userModel");
 const moviesModel = require("../Models/moviesModel");
-const { saveToStorage } = require("../utils/firebaseStorage");
+const {
+  saveToStorage,
+  deleteFromStorage,
+} = require("../utils/firebaseStorage");
 class UserRepository {
   constructor() {}
 
@@ -48,7 +51,10 @@ class UserRepository {
     user.lastName = userData.lastName ? userData.lastName : user.lastName;
     user.phone = userData.phone ? userData.phone : user.phone;
 
-    if (userAvatar) {
+    if (userAvatar && Object.keys(userAvatar).length > 0 && userAvatar.avatar) {
+      const url = user.avatar;
+      const path = `userImages/${url.match(/userImages%2F([^?]+)/)[1]}`;
+      await deleteFromStorage([path]);
       const avatar = userAvatar.avatar;
       const avatarFolder = "userImages";
       const avatarUrl = await saveToStorage(avatar, avatarFolder);

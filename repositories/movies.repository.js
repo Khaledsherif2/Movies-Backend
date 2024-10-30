@@ -1,8 +1,9 @@
 const moviesModel = require("../Models/moviesModel");
 const userModel = require("../Models/userModel");
-const { saveToStorage } = require("../utils/firebaseStorage");
-const { deleteFromStorage } = require("../utils/firebaseStorage");
-
+const {
+  saveToStorage,
+  deleteFromStorage,
+} = require("../utils/firebaseStorage");
 class MoviesReposiotry {
   constructor(io) {
     this.io = io;
